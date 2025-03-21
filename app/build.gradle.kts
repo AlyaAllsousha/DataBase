@@ -1,16 +1,18 @@
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("kapt") version "1.9.25"
 }
 
 android {
     namespace = "ru.example.a2102database"
-    compileSdk = 33
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "ru.example.a2102database"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -40,7 +42,8 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.15"
+
     }
     packaging {
         resources {
@@ -50,7 +53,10 @@ android {
 }
 
 dependencies {
-
+    val room_version = "2.2.6"
+    implementation("androidx.room:room-runtime:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
     implementation("androidx.activity:activity-compose:1.10.1")
