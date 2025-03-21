@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.EditText
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.GlobalScope
@@ -81,8 +83,9 @@ class MainActivity : ComponentActivity() {
         ) {
             Text(text = "id")
             TextField(
-                value = belkaId,
-                onValueChange = {it -> belkaId=it})
+                value = belkaId ,
+                onValueChange = {it -> belkaId=it}
+            )
             Text(text = "name")
             TextField(
                 value = belkaText,
@@ -93,7 +96,10 @@ class MainActivity : ComponentActivity() {
                 onValueChange = {it -> belkaColor=it})
             Button(onClick = {
                 GlobalScope.launch {
-                    SingletonBD.bd.belkaDao().insertBelka(Belka(0, belkaColor, belkaText))
+                    if(belkaId == ""){
+                        belkaId = "0"
+                    }
+                    SingletonBD.bd.belkaDao().insertBelka(Belka(belkaId.toInt(), belkaColor, belkaText))
                     belkaMutableState.value = SingletonBD.bd.belkaDao().getAllBelka()
                 }
 
